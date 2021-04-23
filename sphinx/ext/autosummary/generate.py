@@ -33,6 +33,8 @@ from typing import Any, Dict, List, NamedTuple, Set, Tuple, Type, Union
 from jinja2 import TemplateNotFound
 from jinja2.sandbox import SandboxedEnvironment
 
+import sphinxext_autox
+
 import sphinx.locale
 from sphinx import __display_version__, package_dir
 from sphinx.application import Sphinx
@@ -126,7 +128,7 @@ class AutosummaryRenderer:
             warnings.warn('template_dir argument for AutosummaryRenderer is deprecated.',
                           RemovedInSphinx50Warning, stacklevel=2)
 
-        system_templates_path = [os.path.join(package_dir, 'ext', 'autosummary', 'templates')]
+        system_templates_path = [os.path.join(os.path.dirname(__file__), 'templates')]
         loader = SphinxTemplateLoader(app.srcdir, app.config.templates_path,
                                       system_templates_path)
 
