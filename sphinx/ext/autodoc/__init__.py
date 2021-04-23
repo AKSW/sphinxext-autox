@@ -2536,6 +2536,7 @@ class PropertyDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):  #
     Specialized Documenter subclass for properties.
     """
     objtype = 'property'
+    directivetype = 'method'
     member_order = 60
 
     # before AttributeDocumenter
@@ -2553,25 +2554,33 @@ class PropertyDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):  #
         return self.get_attr(self.parent or self.object, '__module__', None) \
             or self.modname
 
-    def add_directive_header(self, sig: str) -> None:
-        super().add_directive_header(sig)
-        sourcename = self.get_sourcename()
-        if inspect.isabstractmethod(self.object):
-            self.add_line('   :abstractmethod:', sourcename)
-
+    def format_signature(self, **kwargs) -> str:
+        objrepr = None
         if safe_getattr(self.object, 'fget', None):
             try:
                 signature = inspect.signature(self.object.fget,
                                               type_aliases=self.config.autodoc_type_aliases)
                 if signature.return_annotation is not Parameter.empty:
                     objrepr = stringify_typehint(signature.return_annotation)
-                    self.add_line('   :type: ' + objrepr, sourcename)
+                    # self.add_line('   :type: ' + objrepr, sourcename)
             except TypeError as exc:
                 logger.warning(__("Failed to get a function signature for %s: %s"),
                                self.fullname, exc)
                 return None
             except ValueError:
                 raise
+        if objrepr is not None:
+            self.args = ''
+            self.retann = objrepr
+        return super().format_signature(**kwargs)
+
+    def add_directive_header(self, sig: str) -> None:
+        super().add_directive_header(sig)
+        sourcename = self.get_sourcename()
+        if inspect.isabstractmethod(self.object):
+            self.add_line('   :abstractmethod:', sourcename)
+        self.add_line('   :property:', sourcename)
+
 
 
 class NewTypeAttributeDocumenter(AttributeDocumenter):
