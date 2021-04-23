@@ -7,8 +7,12 @@ __version__ = '0.0.1'
 sphinx.ext.__path__.insert(
     0,
     os.path.abspath(
-        os.sep.join([os.path.dirname(__file__), '..', 'sphinx', 'ext'])))
-print("SPHINX EXT PATH IS NOW", sphinx.ext.__path__)
+        os.sep.join([os.path.dirname(__file__), 'sphinx', 'ext'])))
+print("[sphinxext_autox] replacing built-in exts, sphinx.ext.__path__ is now", sphinx.ext.__path__)
 
 def setup(app):
-    return dict()
+    app.setup_extension('sphinx.ext.autosummary')
+    app.setup_extension('sphinx.ext.autodoc')
+    return {
+        'version': __version__,
+    }

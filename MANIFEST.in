@@ -1,3 +1,2 @@
-recursive-include sphinx *.py
-recursive-include sphinx *.rst
 recursive-include sphinxext_autox *.py
+recursive-include sphinxext_autox *.rst
