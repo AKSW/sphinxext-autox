@@ -1,13 +1,51 @@
-{{ fullname | escape | underline}}
+{{ fullname | escape | underline }}
+
+{% block modules %}
+{% if modules %}
+.. autosummary::
+   :toctree:
+   :shorttoc:
+   :recursive:
+{% for item in modules %}
+   {{ item }}
+{%- endfor %}
+{% endif %}
+{% endblock %}
 
 .. automodule:: {{ fullname }}
 
-   {% block attributes %}
-   {% if attributes %}
-   .. rubric:: {{ _('Module Attributes') }}
+   {% block classes %}
+   {% if classes %}
+   .. rubric:: {{ _('Classes') }}
 
    .. autosummary::
-   {% for item in attributes %}
+      :toctree:
+      :shorttoc:
+      :nosignatures:
+
+      .. raw:: latex
+
+         \iffalse
+
+   {% for item in classes %}
+      {{ item }}
+   {%- endfor %}
+
+      .. raw:: latex
+
+         \fi
+
+   {% endif %}
+   {% endblock %}
+
+   {% block exceptions %}
+   {% if exceptions %}
+   .. rubric:: {{ _('Exceptions') }}
+
+   .. autosummary::
+      :toctree:
+      :shorttoc:
+   {% for item in exceptions %}
       {{ item }}
    {%- endfor %}
    {% endif %}
@@ -18,43 +56,23 @@
    .. rubric:: {{ _('Functions') }}
 
    .. autosummary::
+      :toctree:
+      :shorttoc:
+      :nosignatures:
    {% for item in functions %}
       {{ item }}
    {%- endfor %}
    {% endif %}
    {% endblock %}
 
-   {% block classes %}
-   {% if classes %}
-   .. rubric:: {{ _('Classes') }}
+   {% block attributes %}
+   {% if attributes %}
+   .. rubric:: Module attributes
 
-   .. autosummary::
-   {% for item in classes %}
-      {{ item }}
-   {%- endfor %}
+   .. currentmodule:: {{ fullname }}
+   {% for item in attributes %}
+   .. autodata:: {{ item }}
+   {% endfor %}
    {% endif %}
    {% endblock %}
 
-   {% block exceptions %}
-   {% if exceptions %}
-   .. rubric:: {{ _('Exceptions') }}
-
-   .. autosummary::
-   {% for item in exceptions %}
-      {{ item }}
-   {%- endfor %}
-   {% endif %}
-   {% endblock %}
-
-{% block modules %}
-{% if modules %}
-.. rubric:: Modules
-
-.. autosummary::
-   :toctree:
-   :recursive:
-{% for item in modules %}
-   {{ item }}
-{%- endfor %}
-{% endif %}
-{% endblock %}
