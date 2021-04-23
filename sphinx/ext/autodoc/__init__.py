@@ -1606,7 +1606,7 @@ class ClassDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # type: 
             self.add_line('   :final:', sourcename)
 
         canonical_fullname = self.get_canonical_fullname()
-        if not self.doc_as_attr and canonical_fullname and self.fullname != canonical_fullname:
+        if sphinx.__version__ >= '4' and not self.doc_as_attr and canonical_fullname and self.fullname != canonical_fullname:
             self.add_line('   :canonical: %s' % canonical_fullname, sourcename)
 
         # add inheritance info, if wanted
