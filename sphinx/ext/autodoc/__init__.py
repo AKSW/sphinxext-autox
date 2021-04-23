@@ -33,7 +33,8 @@ from sphinx.util import inspect, logging
 from sphinx.util.docstrings import extract_metadata, prepare_docstring
 from sphinx.util.inspect import (evaluate_signature, getdoc, object_description, safe_getattr,
                                  stringify_signature)
-from sphinx.util.typing import OptionSpec, get_type_hints, restify
+from sphinxext_util_typing.typing import OptionSpec
+from sphinx.util.typing import get_type_hints, restify
 from sphinx.util.typing import stringify as stringify_typehint
 
 if TYPE_CHECKING:
