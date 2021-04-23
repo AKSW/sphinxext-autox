@@ -85,7 +85,7 @@ from sphinx.util import logging, rst
 from sphinx.util.docutils import (NullReporter, SphinxDirective, SphinxRole, new_document,
                                   switch_source_input)
 from sphinx.util.matching import Matcher
-from sphinxext_util_typing.typing import OptionSpec
+from sphinxext_autox.typing import OptionSpec
 from sphinx.writers.html import HTMLTranslator
 
 logger = logging.getLogger(__name__)
