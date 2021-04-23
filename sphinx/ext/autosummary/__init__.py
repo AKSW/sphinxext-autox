@@ -102,7 +102,6 @@ WELL_KNOWN_ABBREVIATIONS = ('et al.', ' i.e.',)
 class autosummary_toc(nodes.comment):
     pass
 
-
 def process_autosummary_toc(app: Sphinx, doctree: nodes.document) -> None:
     """Insert items described in autosummary:: to the TOC tree, but do
     not generate the toctree:: list.
@@ -232,6 +231,7 @@ class Autosummary(SphinxDirective):
         'nosignatures': directives.flag,
         'recursive': directives.flag,
         'template': directives.unchanged,
+        'shorttoc': directives.flag,
     }
 
     def run(self) -> List[Node]:
@@ -270,6 +270,10 @@ class Autosummary(SphinxDirective):
                 tocnode = addnodes.toctree()
                 tocnode['includefiles'] = docnames
                 tocnode['entries'] = [(None, docn) for docn in docnames]
+                if 'shorttoc' in self.options:
+                    tocnode['entries'] = [
+                        (_[1].split('.')[-1] if '.' in _[1] else _[0], _[1]) for _ in tocnode['entries']
+                    ]
                 tocnode['maxdepth'] = -1
                 tocnode['glob'] = None
                 tocnode['caption'] = self.options.get('caption')
