@@ -1,6 +1,8 @@
 import os
 import sphinx.ext
 
+__version__ = '0.0.1'
+
 # override sphinx.ext with our patched versions
 sphinx.ext.__path__.insert(
     0,
