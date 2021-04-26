@@ -66,11 +66,11 @@
    {% endblock %}
 
    {% block attributes %}
-   {% if attributes %}
+   {% if all_attributes %}
    .. rubric:: Module attributes
 
    .. currentmodule:: {{ fullname }}
-   {% for item in attributes %}
+   {% for item in all_attributes %}
    .. autodata:: {{ item }}
    {% endfor %}
    {% endif %}
